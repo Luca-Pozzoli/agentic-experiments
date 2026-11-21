@@ -1,4 +1,4 @@
-from collections.abc import Callable
+from collections.abc import Callable, Iterator
 from dataclasses import dataclass, field
 
 import pytest
@@ -29,10 +29,10 @@ class SimpleQueue(EventQueue):
 
 
 @pytest.fixture(scope="session")
-def graph_factory_fixture() -> Callable[[BaseChatModel], CompiledStateGraph]:
-    return build_graph
+def graph_factory_fixture() -> Iterator[Callable[[BaseChatModel], CompiledStateGraph]]:
+    yield build_graph
 
 
 @pytest.fixture(scope="session")
-def event_queue_factory_fixture() -> Callable[[], SimpleQueue]:
-    return SimpleQueue
+def event_queue_factory_fixture() -> Iterator[Callable[[], SimpleQueue]]:
+    yield SimpleQueue
