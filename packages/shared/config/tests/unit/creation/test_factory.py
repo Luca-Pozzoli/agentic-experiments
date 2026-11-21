@@ -1,9 +1,23 @@
+import string
 from collections.abc import Callable
 from pathlib import Path
 
 from config.creation import ConfigFactory, DotEnvConfigContext, EnvConfigContext
-from config.model import AppConfig, FacadeKind
+from config.model import AppConfig, FacadeKind, LLMProviderKind
 from hypothesis import HealthCheck, given, settings, strategies
+from hypothesis.provisional import urls
+from hypothesis.strategies import SearchStrategy
+
+API_KEY_STRATEGY: SearchStrategy[str] = strategies.text(
+    alphabet=string.ascii_letters + string.digits + "-_",
+    min_size=8,
+    max_size=64,
+)
+MODEL_NAME_STRATEGY: SearchStrategy[str] = strategies.text(
+    alphabet=string.ascii_letters + string.digits + "-_.",
+    min_size=4,
+    max_size=64,
+)
 
 
 @settings(suppress_health_check=[HealthCheck.function_scoped_fixture])
@@ -65,6 +79,16 @@ def _create_test_data_strategy_for_facade_config(
                             "kind": strategies.just(FacadeKind.A2A),
                             "host": strategies.ip_addresses(),
                             "port": strategies.integers(min_value=1, max_value=65535),
+                            "llm": strategies.fixed_dictionaries(
+                                {
+                                    "kind": strategies.just(
+                                        LLMProviderKind.OpenAICompatible
+                                    ),
+                                    "api_key": API_KEY_STRATEGY,
+                                    "url": urls(),
+                                    "model": MODEL_NAME_STRATEGY,
+                                }
+                            ),
                         }
                     )
                 }

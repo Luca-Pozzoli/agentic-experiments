@@ -3,8 +3,8 @@ from collections.abc import Iterator
 import pytest
 from pytest import MonkeyPatch
 
-from agentic_experiments.orchestration import CompositionRoot
-from config import EnvConfigContext
+from agentic_experiments.composition_root import CompositionRoot
+from config import EnvConfigContext, FacadeKind, LLMProviderKind
 
 
 @pytest.fixture
@@ -12,9 +12,15 @@ def env_vars_setup_fixture(monkeypatch: MonkeyPatch) -> Iterator[None]:
     _inject_env_vars(
         {
             "facade": {
-                "kind": "a2a",
+                "kind": FacadeKind.A2A,
                 "host": "127.0.0.1",
                 "port": 8000,
+                "llm": {
+                    "kind": LLMProviderKind.OpenAICompatible,
+                    "api_token": "EMPTY",
+                    "url": "http://127.0.0.1:11434",
+                    "model": "MODEL",
+                },
             }
         },
         monkeypatch,

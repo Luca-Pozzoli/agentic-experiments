@@ -15,13 +15,14 @@ from starlette.applications import Starlette
 
 from agentic_experiments.facade.a2a.executor import build_executor
 from agentic_experiments.facade.a2a.graph import get_compiled_graph
+from config import A2AFacadeConfig
 
 
-def expose_a2a_facade(host: str, port: int) -> NoReturn:  # ty: ignore[invalid-implicit-return]
+def expose_a2a_facade(a2a_config: A2AFacadeConfig) -> NoReturn:  # ty: ignore[invalid-implicit-return]
     agent_executor = build_executor(get_compiled_graph())
-    card = _build_orchestrator_card(f"http://{host}:{port}")
+    card = _build_orchestrator_card(f"http://{a2a_config.host}:{a2a_config.port}")
     asgi_app = _build_asgi_app(agent_executor, card)
-    uvicorn.run(asgi_app, host=host, port=port)
+    uvicorn.run(asgi_app, host=str(a2a_config.host), port=a2a_config.port)
 
 
 def _build_asgi_app(agent_executor: AgentExecutor, card: AgentCard) -> Starlette:

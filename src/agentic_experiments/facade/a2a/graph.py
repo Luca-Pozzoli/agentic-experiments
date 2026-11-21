@@ -6,6 +6,7 @@ from langgraph.constants import END, START
 from langgraph.graph import MessagesState
 from langgraph.graph.state import CompiledStateGraph, StateGraph
 
+# TODO inject config values
 local_llm: Final[BaseChatOpenAI] = ChatOpenAI(
     base_url="http://localhost:11434/v1",
     api_key="EMPTY",

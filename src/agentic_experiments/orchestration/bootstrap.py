@@ -1,20 +1,21 @@
+from agentic_experiments.composition_root import CompositionRoot
 from agentic_experiments.facade import expose_facade
-from agentic_experiments.orchestration.composition_root import CompositionRoot
-from config import ConfigContext
+from config import ConfigContext, FacadeConfig
 
 
 def start_app(config_context: ConfigContext) -> None:
-    _activate_inversion_of_control(config_context)
-    _run()
+    root: CompositionRoot = _retrieve_activated_composition_root(config_context)
+    _run(root.config_container().app_config().facade)
 
 
-def _activate_inversion_of_control(
+def _retrieve_activated_composition_root(
     config_context: ConfigContext,
-) -> None:
+) -> CompositionRoot:
     composition_root: CompositionRoot = CompositionRoot()
     composition_root.config_context.override(config_context)
     composition_root.init_resources()
+    return composition_root
 
 
-def _run() -> None:
-    expose_facade()
+def _run(facade_config: FacadeConfig) -> None:
+    expose_facade(facade_config)
