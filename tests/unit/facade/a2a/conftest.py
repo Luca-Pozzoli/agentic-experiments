@@ -85,9 +85,9 @@ def graph_factory_fixture() -> Callable[[BaseChatModel], CompiledStateGraph]:
     return build_graph
 
 
-@pytest.fixture
-def event_queue_fixture() -> EventQueueFixture:
-    return EventQueueFixture()
+@pytest.fixture(scope="session")
+def event_queue_factory_fixture() -> Callable[[], EventQueueFixture]:
+    return EventQueueFixture
 
 
 def _make_context(text: str | None) -> RequestContext:
