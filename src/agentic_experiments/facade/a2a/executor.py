@@ -48,3 +48,7 @@ class GraphAgentExecutor(AgentExecutor):
             {"messages": [("user", query)]}
         )
         return result["messages"][-1].content
+
+
+def build_executor(graph: CompiledStateGraph) -> AgentExecutor:
+    return GraphAgentExecutor(graph)

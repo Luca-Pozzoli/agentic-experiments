@@ -1,2 +1,5 @@
+from agentic_experiments.facade import expose_facade
+
+
 def main() -> None:
-    print("Hello from agentic-experiments!")
+    expose_facade()
