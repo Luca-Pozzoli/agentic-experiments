@@ -14,7 +14,7 @@ def env_vars_setup_fixture(monkeypatch: MonkeyPatch) -> Iterator[None]:
             "facade": {
                 "kind": FacadeKind.A2A,
                 "host": "127.0.0.1",
-                "port": 8000,
+                "port": 8080,
                 "llm": {
                     "kind": LLMProviderKind.OpenAICompatible,
                     "api_token": "EMPTY",
