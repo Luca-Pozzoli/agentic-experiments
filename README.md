@@ -77,8 +77,17 @@ An example of a `.env` file is the one below
 APP_FACADE__KIND=a2a
 APP_FACADE__HOST=127.0.0.1
 APP_FACADE__PORT=8080
+APP_FACADE__LLM__KIND=openai-compatible
+APP_FACADE__LLM__MODEL=<model_name>
+APP_FACADE__LLM__URL=http://localhost:11434/v1
+APP_FACADE__LLM__API_KEY=EMPTY
 ```
 
 please notice the `APP_` variable prefix and the `__` nested limited separator.
 
 Environment variables have the same names of their `.env` counterpart
+
+### External services
+
+Inside the project there is a [docker-compose.yml](https://docs.docker.com/reference/compose-file/) file which
+contains containerized versions of external dependencies (such as [Ollama](https://ollama.com/) for local inference).
