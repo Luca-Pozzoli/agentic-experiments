@@ -19,7 +19,7 @@ from config import A2AFacadeConfig
 
 
 def expose_a2a_facade(a2a_config: A2AFacadeConfig) -> NoReturn:  # ty: ignore[invalid-implicit-return]
-    agent_executor = build_executor(get_compiled_graph())
+    agent_executor = build_executor(get_compiled_graph(a2a_config.llm))
     card = _build_orchestrator_card(f"http://{a2a_config.host}:{a2a_config.port}")
     asgi_app = _build_asgi_app(agent_executor, card)
     uvicorn.run(asgi_app, host=str(a2a_config.host), port=a2a_config.port)

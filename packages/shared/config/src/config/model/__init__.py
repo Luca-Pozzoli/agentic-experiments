@@ -3,7 +3,9 @@ from config.model.facade import (
     A2AFacadeConfig,
     FacadeConfig,
     FacadeKind,
+    LLMConfig,
     LLMProviderKind,
+    OpenAICompatibleModelConfig,
 )
 
 __all__ = [
@@ -11,5 +13,7 @@ __all__ = [
     "AppConfig",
     "FacadeConfig",
     "FacadeKind",
+    "LLMConfig",
     "LLMProviderKind",
+    "OpenAICompatibleModelConfig",
 ]
