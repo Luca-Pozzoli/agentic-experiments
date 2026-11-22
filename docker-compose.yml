@@ -1,0 +1,12 @@
+services:
+  llm:
+    image: ollama/ollama:0.40.15
+    devices:
+      - nvidia.com/gpu=all
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/root/.ollama
+
+volumes:
+  ollama:

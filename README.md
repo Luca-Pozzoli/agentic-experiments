@@ -49,3 +49,45 @@ All test groups can be sequentially executed with the following command
 ```
 uv run poe test
 ```
+
+## Start
+
+The project can be started with
+
+```
+uv run poe start
+```
+
+For CLI args please follow [Typer](https://typer.tiangolo.com/) instructions.
+
+When starting the application from PyCharm, use the
+[script parameters](https://www.jetbrains.com/help/pycharm/run-debug-configuration.html#run-debug-parameters)
+to add CLI args.
+
+### Configuration
+
+Application config, at the time of writing, supports two sources:
+
+- environment variables
+- `.env` file inside the `config` folder
+
+An example of a `.env` file is the one below
+
+```
+APP_FACADE__KIND=a2a
+APP_FACADE__HOST=127.0.0.1
+APP_FACADE__PORT=8080
+APP_FACADE__LLM__KIND=openai-compatible
+APP_FACADE__LLM__MODEL=<model_name>
+APP_FACADE__LLM__URL=http://localhost:11434/v1
+APP_FACADE__LLM__API_KEY=EMPTY
+```
+
+please notice the `APP_` variable prefix and the `__` nested limited separator.
+
+Environment variables have the same names of their `.env` counterpart
+
+### External services
+
+Inside the project there is a [docker-compose.yml](https://docs.docker.com/reference/compose-file/) file which
+contains containerized versions of external dependencies (such as [Ollama](https://ollama.com/) for local inference).

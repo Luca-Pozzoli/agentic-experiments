@@ -2,8 +2,18 @@ from pathlib import Path
 
 import pytest
 
+FOLDER_MARKERS: dict[str, str] = {
+    "unit": "marks tests as unit tests",
+    "integration": "marks tests as integration tests",
+}
 
-def pytest_collection_modifyitems(items: list[pytest.Function]):
+
+def pytest_configure(config) -> None:
+    for marker, description in FOLDER_MARKERS.items():
+        config.addinivalue_line("markers", f"{marker}: {description}")
+
+
+def pytest_collection_modifyitems(items: list[pytest.Function]) -> None:
     for item in items:
         test_path: Path = Path(item.fspath)
         path_parts: tuple[str, ...] = test_path.parts
